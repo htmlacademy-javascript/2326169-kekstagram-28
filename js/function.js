@@ -26,18 +26,15 @@ checkingPalindrome('Лёша на полке клопа нашёл ');
 
 const transferInNum = (string) => {
   let result = '';
-  if(Number(string)) {
-    return string;
-  }
-  for(let i = 0; i < string.length; i++) {
-    if(parseInt(string[i], 10) >= 0) {
-      result += string[i];
+  const toString = String(string);
+  for(let i = 0; i < toString.length; i++) {
+    if(parseInt(toString[i], 10) >= 0) {
+      result += toString[i];
     }
   }
   return parseInt(result, 10);
 };
-
-transferInNum ('2023 год');
+transferInNum ('1 кефир, 0.5 батона');
 
 
 /* 4.
@@ -45,27 +42,14 @@ transferInNum ('2023 год');
 минимальную длину и строку с добавочными символами — и возвращает
 исходную строку, дополненную указанными символами до заданной длины.
 */
-// Первый вариант:
-const myPadStart = (string, minLength, pad) => {
-  const actualPad = minLength - string.length;
-  if(actualPad <= 0) {
-    return string;
-  }
-  const tempPad = pad.slice(0, actualPad % pad.length);
-  const tempRepeat = pad.repeat(actualPad / pad.length);
-  return tempPad + tempRepeat + string;
-};
-myPadStart ('q', 4, 'qwerty');
 
-// Второй вариант:
-const myPadStart2 = (string, minLength, pad) => {
+const padStart = (string, minLength, pad) => {
   let result = string;
   while (result.length < minLength) {
-    const newResultLength = result.length + pad.length;
-    const actualPad = newResultLength <= minLength ? pad : pad.slice(0, minLength - newResultLength);
+    const newLength = result.length + pad.length;
+    const actualPad = newLength <= minLength ? pad : pad.slice(0, minLength - newLength);
     result = actualPad + result;
   }
   return result;
 };
-myPadStart2('qwerty', 4, '0');
-
+padStart('1', 2, '0');
