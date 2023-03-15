@@ -1,6 +1,6 @@
 import {getPictures} from './data.js';
+import {renderThumbnails} from './thumbnail-rendering.js';
 
-// 1. Функция получения рандомных картинок и комментариев;
-const randomPicture = getPictures();
-// eslint-disable-next-line no-console
-console.log (randomPicture);
+
+renderThumbnails(getPictures());
+
