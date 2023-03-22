@@ -1,4 +1,7 @@
-const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
+import { renderBigPicture } from './big-pictures-rendering.js';
+
+const thumbnailTemplate = document.querySelector('#picture')
+  .content.querySelector('.picture');
 const container = document.querySelector('.pictures');
 
 const createThumbnail = ({ comments, description, likes, url }) => {
@@ -17,6 +20,10 @@ const renderThumbnails = (pictures) => {
   pictures.forEach((picture) => {
     const thumbnail = createThumbnail(picture);
     fragment.append(thumbnail);
+    thumbnail.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      renderBigPicture(picture);
+    });
   });
   container.append(fragment);
 };
