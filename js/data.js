@@ -62,6 +62,9 @@ const createPictures = (index) => ({
   comments: Array.from({length: getRandomInteger(0, COMMENT_COUNT)}, createComments)
 });
 
-const getPictures = () => Array.from({length: PICTURE_COUNT}, (_, pictureIndex) => createPictures(pictureIndex + 1));
+const getPictures = () =>
+  Array.from({length: PICTURE_COUNT}, (_, pictureIndex) =>
+    createPictures(pictureIndex + 1));
 
 export {getPictures};
+
