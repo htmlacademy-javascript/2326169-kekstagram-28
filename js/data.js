@@ -42,6 +42,13 @@ const DESCRIPTIONS = [
   'Опасность'
 ];
 
+// Параметры для отоборожения модалки
+const dataForModal = {
+  commentsArray: [],
+  commentUnlock: 0,
+  COMMENT_BLOCK: 5
+};
+
 // Функции получения рандомных картинок и комментариев.
 const generateCommentId = createIdGenerator();
 
@@ -66,5 +73,5 @@ const getPictures = () =>
   Array.from({length: PICTURE_COUNT}, (_, pictureIndex) =>
     createPictures(pictureIndex + 1));
 
-export {getPictures};
+export {getPictures, dataForModal};
 
