@@ -28,9 +28,9 @@ const loaderComments = (comments) => {
   const fragment = document.createDocumentFragment();
   dataForModal.commentUnlock += dataForModal.COMMENT_BLOCK;
   if (dataForModal.commentUnlock >= comments.length) {
-    commentsLoaderButton.classList.toggle('hidden');
     dataForModal.commentUnlock = comments.length;
   }
+  commentsLoaderButton.classList.toggle('hidden', dataForModal.commentUnlock >= comments.length);
   for (let i = 0; i < dataForModal.commentUnlock; i++) {
     const commentElement = renderComment(comments[i]);
     fragment.append(commentElement);
