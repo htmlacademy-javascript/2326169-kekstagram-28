@@ -9,9 +9,7 @@ const socialCommentConteiner = modalElement.querySelector('.social__comments');
 const socialCommentTemplate = modalElement.querySelector('.social__comment');
 const commentsLoaderButton = modalElement.querySelector('.social__comments-loader');
 const body = document.querySelector('body');
-dataForModal.commentsArray = [];
-dataForModal.commentUnlock = 0;
-dataForModal.COMMENT_BLOCK = 5;
+
 
 const renderComment = (comment) => {
   const template = socialCommentTemplate;
@@ -40,6 +38,13 @@ const loaderComments = (comments) => {
   socialCommentsCount.innerHTML = `${dataForModal.commentUnlock} из <span class="comments-count">${comments.length}</span> комментариев</div>`;
 };
 
+const onModalEscKeydown = (evt) => {
+  if(isEscapeKey(evt)) {
+    evt.preventDefault();
+    onCloseModalClick();
+  }
+};
+
 const renderBigPicture = (picture) => {
   body.classList.add('modal-open');
   modalElement.classList.remove('hidden');
@@ -49,32 +54,20 @@ const renderBigPicture = (picture) => {
   dataForModal.commentsArray = Array.from(picture.comments);
   dataForModal.commentUnlock = 0;
   loaderComments(dataForModal.commentsArray);
+  document.addEventListener('keydown', onModalEscKeydown);
 };
 
-const onModalEscKeydown = (evt) => {
-  if(isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeModal();
-  }
-};
-
-function loadComments () {
+function onLoadMoreCommentsButtonClick () {
   loaderComments(dataForModal.commentsArray);
 }
 
-function closeModal () {
+function onCloseModalClick () {
   modalElement.classList.add('hidden');
   body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onModalEscKeydown);
 }
 
-closeModalElement.addEventListener('click', () => {
-  closeModal();
-});
-
-commentsLoaderButton.addEventListener('click', () => {
-  loadComments();
-});
-
-document.addEventListener('keydown', onModalEscKeydown);
+closeModalElement.addEventListener('click', onCloseModalClick);
+commentsLoaderButton.addEventListener('click', onLoadMoreCommentsButtonClick);
 
 export {renderBigPicture};
