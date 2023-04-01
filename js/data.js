@@ -49,6 +49,11 @@ const dataForModal = {
   COMMENT_BLOCK: 5
 };
 
+const dataForForm = {
+  MAX_HASHTAG_QUANTITY: 5,
+  VALID_SYMBOLS: /^#[a-zа-яё0-9]{1,19}$/i,
+};
+
 // Функции получения рандомных картинок и комментариев.
 const generateCommentId = createIdGenerator();
 
@@ -73,5 +78,5 @@ const getPictures = () =>
   Array.from({length: PICTURE_COUNT}, (_, pictureIndex) =>
     createPictures(pictureIndex + 1));
 
-export {getPictures, dataForModal};
+export { getPictures, dataForModal, dataForForm };
 
