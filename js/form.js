@@ -63,8 +63,10 @@ function onDocumentEscKeydown (evt) {
 }
 
 const submitForm = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+  const isValid = pristine.validate();
+  if (!isValid) {
+    evt.preventDefault();
+  }
 };
 
 const onUploadFileChange = () => {

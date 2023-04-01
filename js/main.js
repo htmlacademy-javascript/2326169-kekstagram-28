@@ -1,5 +1,5 @@
 import {getPictures} from './data.js';
 import {renderGallery} from './gallery.js';
-import {} from './img-upload.js';
+import {} from './form.js';
 
 renderGallery(getPictures());
