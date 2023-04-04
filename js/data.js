@@ -49,12 +49,21 @@ const dataForModal = {
   COMMENT_BLOCK: 5
 };
 
+// Параметры для валидации формы
 const dataForForm = {
   MAX_HASHTAG_QUANTITY: 5,
   VALID_SYMBOLS: /^#[a-zа-яё0-9]{1,19}$/i,
-  ERROR_MESSAGE_VALID_HASHTAG: 'Хэштэг не может быть только #. Хэштэг должен начинаться с # и быть не больше 20 символов',
+  ERROR_MESSAGE_VALID_HASHTAG: 'Хэштэг должен начинаться с #. Хэштэг не может быть только # и иметь более 20 символов, а также иметь спец символы в названии такие как !"№;%: и т.д.',
   ERROR_MESSAGE_HASHTAG_QUANTITY:'Должно быть не более 5 хэштэгов',
   ERROR_MESSAGE_UNIQUE_HASHTAG: 'Хэштэги должны быть уникальными',
+};
+
+// Параметры для редактирования изображения
+const dataForScale = {
+  defaultValue: 100,
+  step: 25,
+  minValue: 25,
+  maxValue: 100,
 };
 
 // Функции получения рандомных картинок и комментариев.
@@ -81,5 +90,5 @@ const getPictures = () =>
   Array.from({length: PICTURE_COUNT}, (_, pictureIndex) =>
     createPictures(pictureIndex + 1));
 
-export { getPictures, dataForModal, dataForForm };
+export { getPictures, dataForModal, dataForForm, dataForScale };
 
