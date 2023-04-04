@@ -1,5 +1,6 @@
 import { isEscapeKey } from './util.js';
 import { dataForForm } from './data.js';
+import { resetScale } from './scale.js';
 
 const form = document.querySelector('.img-upload__form');
 const uploadStart = form.querySelector('#upload-file');
@@ -71,13 +72,15 @@ const isFieldFocus = () =>
 const overlayClose = () => {
   form.reset();
   pristine.reset();
+  resetScale();
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentEscKeydown);
 };
-
+//ЗАСУНЬ ОБРАТНО В overlayOpen
+overlay.classList.remove('hidden');
 const overlayOpen = () => {
-  overlay.classList.remove('hidden');
+
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentEscKeydown);
 };
