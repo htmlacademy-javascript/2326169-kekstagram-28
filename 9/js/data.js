@@ -52,6 +52,9 @@ const dataForModal = {
 const dataForForm = {
   MAX_HASHTAG_QUANTITY: 5,
   VALID_SYMBOLS: /^#[a-zа-яё0-9]{1,19}$/i,
+  ERROR_MESSAGE_VALID_HASHTAG: 'Хэштэг не может быть только #. Хэштэг должен начинаться с # и быть не больше 20 символов',
+  ERROR_MESSAGE_HASHTAG_QUANTITY:'Должно быть не более 5 хэштэгов',
+  ERROR_MESSAGE_UNIQUE_HASHTAG: 'Хэштэги должны быть уникальными',
 };
 
 // Функции получения рандомных картинок и комментариев.

@@ -9,31 +9,58 @@ const commentField = form.querySelector('.text__description');
 const overlay = form.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
 
-
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   erorTextClass: 'img-upload__field-wrapper__error',
 });
 
-const isValidHashtag = (hashtags) => dataForForm.VALID_SYMBOLS.test(hashtags);
+let tagsList;
+function validateHashtag (value) {
+  tagsList = value.trim().split(' ').filter((tag) => tag.trim().length);
+  return tagsList;
+}
 
-const isUniqHashtags = (hashtags) => {
-  const lowerCaseHashtags = hashtags.map((hashtag) => hashtag.toLowerCase());
+const isValidHashtag = (value) => dataForForm.VALID_SYMBOLS.test(value);
+
+const isUniqHashtags = (value) => {
+  const lowerCaseHashtags = value.map((hashtag) => hashtag.toLowerCase());
   return lowerCaseHashtags.length === new Set(lowerCaseHashtags).size;
 };
 
-const checkingForQuantityHashtags = (hashtags) => hashtags.length <= dataForForm.MAX_HASHTAG_QUANTITY;
+const checkingForQuantityHashtags = (value) => value.length <= dataForForm.MAX_HASHTAG_QUANTITY;
 
-function validateHashtag (value) {
-  const hashtag = value.trim().split(' ');
-  return checkingForQuantityHashtags(hashtag) && isUniqHashtags(hashtag) && hashtag.every(isValidHashtag);
-}
+const validateUniqueHashtags = (value) => {
+  validateHashtag(value,tagsList);
+  return isUniqHashtags(tagsList);
+};
+
+const validateQuantityHashtags = (value) => {
+  validateHashtag(value,tagsList);
+  return checkingForQuantityHashtags(tagsList);
+};
+
+const validateValidHashtags = (value) => {
+  validateHashtag(value,tagsList);
+  return tagsList.every(isValidHashtag);
+};
 
 pristine.addValidator(
   hashtagField,
-  validateHashtag,
-  'ХЕШ-ТЕГ ВВЕДЁН НЕКОРРЕКТНО',
+  validateQuantityHashtags,
+  dataForForm.ERROR_MESSAGE_HASHTAG_QUANTITY,
+);
+
+pristine.addValidator(
+  hashtagField,
+  validateUniqueHashtags,
+  dataForForm.ERROR_MESSAGE_UNIQUE_HASHTAG,
+);
+
+pristine.addValidator(
+  hashtagField,
+  validateValidHashtags,
+  dataForForm.ERROR_MESSAGE_VALID_HASHTAG,
 );
 
 
