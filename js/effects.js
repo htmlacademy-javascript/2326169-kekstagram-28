@@ -1,4 +1,4 @@
-import { dataForEffects, DEFAULT_EFFECT } from './data.js';
+import { dataForEffects, } from './data.js';
 
 const effectsElement = document.querySelector('.effects');
 const imageElement = document.querySelector('.img-upload__preview img');
@@ -6,9 +6,9 @@ const fieldEffectLevel = document.querySelector('.img-upload__effect-level');
 const sliderElement = fieldEffectLevel.querySelector('.effect-level__slider');
 const inputSlider = fieldEffectLevel.querySelector('.effect-level__value');
 
-let chosenEffect = DEFAULT_EFFECT;
+let chosenEffect = dataForEffects[0];
 
-const isDefaultFillter = () => chosenEffect === DEFAULT_EFFECT;
+const isDefaultFillter = () => chosenEffect === dataForEffects[0];
 
 const showSlider = () => {
   fieldEffectLevel.classList.remove('hidden');
@@ -45,23 +45,28 @@ const onEffectsChange = (evt) => {
 
 const onSliderUpdate = () => {
   const sliderValue = sliderElement.noUiSlider.get();
-  imageElement.style.filter = isDefaultFillter()
-    ? DEFAULT_EFFECT.style
-    : `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
+  imageElement.style.filter = isDefaultFillter();
+  if (isDefaultFillter()) {
+    imageElement.style.filter = dataForEffects[0].style;
+  } else {
+    imageElement.style.filter = `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
+  }
   inputSlider.value = sliderValue;
 };
 
 const resetEffects = () => {
-  chosenEffect = DEFAULT_EFFECT;
+  imageElement.style.filter = dataForEffects[0].style;
+  imageElement.className = 'effects__preview--none';
+  hideSlider();
 };
 
 noUiSlider.create(sliderElement, {
   range: {
-    min: DEFAULT_EFFECT.min,
-    max: DEFAULT_EFFECT.max,
+    min: dataForEffects[0].min,
+    max: dataForEffects[0].max,
   },
-  start: DEFAULT_EFFECT.max,
-  step: DEFAULT_EFFECT.step,
+  start: dataForEffects[0].max,
+  step: dataForEffects[0].step,
   connect: 'lower',
 });
 

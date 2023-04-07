@@ -72,9 +72,9 @@ const isFieldFocus = () =>
 
 const overlayClose = () => {
   form.reset();
-  pristine.reset();
   resetScale();
   resetEffects();
+  pristine.reset();
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentEscKeydown);
