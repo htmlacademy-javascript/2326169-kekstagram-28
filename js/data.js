@@ -50,6 +50,7 @@ const dataForModal = {
 };
 
 // Параметры для формы
+
 const dataForForm = {
   MAX_HASHTAG_QUANTITY: 5,
   VALID_SYMBOLS: /^#[a-zа-яё0-9]{1,19}$/i,
@@ -117,7 +118,6 @@ const dataForEffects = [
     unit: ''
   },
 ];
-
 
 // Функции получения рандомных картинок и комментариев.
 const generateCommentId = createIdGenerator();
