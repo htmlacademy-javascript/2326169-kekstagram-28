@@ -1,5 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { dataForForm } from './data.js';
+import { resetScale } from './scale.js';
+import { resetEffects } from './effects.js';
 
 const form = document.querySelector('.img-upload__form');
 const uploadStart = form.querySelector('#upload-file');
@@ -70,6 +72,8 @@ const isFieldFocus = () =>
 
 const overlayClose = () => {
   form.reset();
+  resetScale();
+  resetEffects();
   pristine.reset();
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');

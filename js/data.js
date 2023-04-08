@@ -49,7 +49,8 @@ const dataForModal = {
   COMMENT_BLOCK: 5
 };
 
-// Параметры для валидации формы
+// Параметры для формы
+
 const dataForForm = {
   MAX_HASHTAG_QUANTITY: 5,
   VALID_SYMBOLS: /^#[a-zа-яё0-9]{1,19}$/i,
@@ -62,9 +63,61 @@ const dataForForm = {
 const dataForScale = {
   defaultValue: 100,
   step: 25,
-  minValue: 25,
   maxValue: 100,
+  minValue: 25,
 };
+
+// Параметры для наложения эффекта
+const dataForEffects = [
+  {
+    name: 'none',
+    style: 'none',
+    min: 0,
+    max: 100,
+    step: 1,
+    unit: '',
+  },
+  {
+    name: 'chrome',
+    style: 'grayscale',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: '',
+  },
+  {
+    name: 'sepia',
+    style: 'sepia',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: '',
+  },
+  {
+    name: 'marvin',
+    style: 'invert',
+    min: 0,
+    max: 100,
+    step: 1,
+    unit: '%'
+  },
+  {
+    name: 'phobos',
+    style: 'blur',
+    min: 0,
+    max: 3,
+    step: 0.1,
+    unit: 'px'
+  },
+  {
+    name: 'heat',
+    style: 'brightness',
+    min: 1,
+    max: 3,
+    step: 0.1,
+    unit: ''
+  },
+];
 
 // Функции получения рандомных картинок и комментариев.
 const generateCommentId = createIdGenerator();
@@ -90,5 +143,5 @@ const getPictures = () =>
   Array.from({length: PICTURE_COUNT}, (_, pictureIndex) =>
     createPictures(pictureIndex + 1));
 
-export { getPictures, dataForModal, dataForForm, dataForScale };
+export { getPictures, dataForModal, dataForForm, dataForScale, dataForEffects, };
 
