@@ -143,3 +143,4 @@ const getPictures = () =>
     createPictures(pictureIndex + 1));
 
 export { getPictures, dataForModal, dataForForm, dataForScale, dataForEffects, };
+
