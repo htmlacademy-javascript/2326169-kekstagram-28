@@ -4,7 +4,7 @@ const scaleField = document.querySelector('.img-upload__scale');
 const scaleSmallerButton = scaleField.querySelector('.scale__control--smaller');
 const scale = scaleField.querySelector('.scale__control--value');
 const scaleBiggerButton = scaleField.querySelector('.scale__control--bigger');
-const imagePreview = document.querySelector('.img-upload__preview');
+const imagePreview = document.querySelector('.img-upload__preview img');
 
 
 const scaleImage = (value) => {

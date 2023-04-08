@@ -117,7 +117,7 @@ const dataForEffects = [
     unit: ''
   },
 ];
-const DEFAULT_EFFECT = dataForEffects[0];
+
 
 // Функции получения рандомных картинок и комментариев.
 const generateCommentId = createIdGenerator();
@@ -143,5 +143,5 @@ const getPictures = () =>
   Array.from({length: PICTURE_COUNT}, (_, pictureIndex) =>
     createPictures(pictureIndex + 1));
 
-export { getPictures, dataForModal, dataForForm, dataForScale, dataForEffects, DEFAULT_EFFECT };
+export { getPictures, dataForModal, dataForForm, dataForScale, dataForEffects, };
 
