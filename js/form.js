@@ -1,5 +1,5 @@
 import { isEscapeKey } from './util.js';
-import { dataForForm } from './data.js';
+import { dataForForm, SubmitButtonText } from './data.js';
 import { resetScale } from './scale.js';
 import { resetEffects } from './effects.js';
 
@@ -9,6 +9,7 @@ const uploadCancel = form.querySelector('#upload-cancel');
 const hashtagField = form.querySelector('.text__hashtags');
 const commentField = form.querySelector('.text__description');
 const overlay = form.querySelector('.img-upload__overlay');
+const submitButton = form.querySelector('.img-upload__submit');
 const body = document.querySelector('body');
 
 const pristine = new Pristine(form, {
@@ -93,11 +94,26 @@ function onDocumentEscKeydown (evt) {
   }
 }
 
-const submitForm = (evt) => {
-  const isValid = pristine.validate();
-  if (!isValid) {
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+const submitForm = (cb) => {
+  form.addEventListener('submit', async (evt) => {
     evt.preventDefault();
-  }
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      await cb(new FormData(form));
+      unblockSubmitButton();
+    }
+  });
 };
 
 const onUploadFileChange = () => {
@@ -111,4 +127,6 @@ const onCancelButtonClick = () => {
 
 uploadStart.addEventListener('change', onUploadFileChange);
 uploadCancel.addEventListener('click', onCancelButtonClick);
-form.addEventListener('submit', submitForm);
+
+
+export { submitForm, overlayClose };
