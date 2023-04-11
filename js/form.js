@@ -10,7 +10,10 @@ const hashtagField = form.querySelector('.text__hashtags');
 const commentField = form.querySelector('.text__description');
 const overlay = form.querySelector('.img-upload__overlay');
 const submitButton = form.querySelector('.img-upload__submit');
+const imgUploadPreview = form.querySelector('.img-upload__preview img');
 const body = document.querySelector('body');
+
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -85,6 +88,13 @@ const overlayOpen = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentEscKeydown);
+  const file = uploadStart.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    imgUploadPreview.src = URL.createObjectURL(file);
+  }
 };
 
 function onDocumentEscKeydown (evt) {
