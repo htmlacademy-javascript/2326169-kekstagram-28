@@ -79,6 +79,4 @@ const dataForEffects = [
   },
 ];
 
-
 export { dataForModal, dataForForm, dataForScale, dataForEffects, SubmitButtonText };
-
