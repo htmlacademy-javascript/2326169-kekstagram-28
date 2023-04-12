@@ -1,4 +1,4 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey, showAlert } from './util.js';
 import { DataForForm, SubmitButtonText } from './data.js';
 import { resetScale } from './scale.js';
 import { resetEffects } from './effects.js';
@@ -13,7 +13,9 @@ const submitButton = form.querySelector('.img-upload__submit');
 const imgUploadPreview = form.querySelector('.img-upload__preview img');
 const body = document.querySelector('body');
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const WRONG_FORMAT_MESSAGE = 'Формат изображения должен быть png, jpeg или jpg';
 let tagsList;
+
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -68,7 +70,6 @@ pristine.addValidator(
   DataForForm.ERROR_MESSAGE_VALID_HASHTAG,
 );
 
-
 const isFieldFocus = () =>
   document.activeElement === commentField ||
   document.activeElement === hashtagField;
@@ -89,16 +90,20 @@ const openModal = () => {
   document.addEventListener('keydown', onDocumentEscKeydown);
   const file = uploadStart.files[0];
   const fileName = file.name.toLowerCase();
-
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-  if (matches) {
-    imgUploadPreview.src = URL.createObjectURL(file);
+  if (!matches) {
+    showAlert(WRONG_FORMAT_MESSAGE);
+    closeModal();
   }
+  imgUploadPreview.src = URL.createObjectURL(file);
 };
 
 function onDocumentEscKeydown (evt) {
   if(isEscapeKey(evt) && !isFieldFocus()) {
     evt.preventDefault();
+    if(body.classList.contains('error-active')) {
+      return;
+    }
     closeModal(evt);
   }
 }
