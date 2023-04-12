@@ -17,10 +17,25 @@ const onModalEscKeydown = (evt) => {
   }
 };
 
-function closeModalMessage () {
+
+function isSuccessModal (evt) {
+  if (!evt.target.classList.contains('success')) {
+    return;
+  }
+  closeModalMessage();
+}
+
+function isErrorModal (evt) {
+  if (!evt.target.classList.contains('error')) {
+    return;
+  }
+  closeModalMessage();
+}
+
+function closeModalMessage() {
   templateSuccessMessage.classList.add('hidden');
   templateErrorMessage.classList.add('hidden');
-  document.removeEventListener('keydown', onModalEscKeydown);
+  body.classList.remove('error-active');
 }
 
 const showSuccessMessage = () => {
@@ -31,6 +46,7 @@ const showSuccessMessage = () => {
 
 const showErrorMessage = () => {
   body.append(templateErrorMessage);
+  body.classList.add('error-active');
   templateErrorMessage.classList.remove('hidden');
   document.addEventListener('keydown', onModalEscKeydown);
 };
@@ -38,6 +54,7 @@ const showErrorMessage = () => {
 
 successButton.addEventListener('click', closeModalMessage);
 errorButton.addEventListener('click', closeModalMessage);
-document.addEventListener('click', closeModalMessage);
+document.addEventListener('click', isSuccessModal);
+document.addEventListener('click', isErrorModal);
 
 export { showSuccessMessage, showErrorMessage };
