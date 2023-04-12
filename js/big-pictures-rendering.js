@@ -1,5 +1,4 @@
 import { isEscapeKey } from './util.js';
-import { dataForModal } from './data.js';
 
 const modalElement = document.querySelector('.big-picture');
 const socialLikesCount = modalElement.querySelector('.likes-count');
@@ -9,7 +8,9 @@ const socialCommentConteiner = modalElement.querySelector('.social__comments');
 const socialCommentTemplate = modalElement.querySelector('.social__comment');
 const commentsLoaderButton = modalElement.querySelector('.social__comments-loader');
 const body = document.querySelector('body');
-
+let commentsArray = [];
+let commentUnlock = 0;
+const COMMENT_BLOCK = 5;
 
 const renderComment = (comment) => {
   const template = socialCommentTemplate;
@@ -24,18 +25,18 @@ const renderComment = (comment) => {
 
 const loaderComments = (comments) => {
   const fragment = document.createDocumentFragment();
-  dataForModal.commentUnlock += dataForModal.COMMENT_BLOCK;
-  if (dataForModal.commentUnlock >= comments.length) {
-    dataForModal.commentUnlock = comments.length;
+  commentUnlock += COMMENT_BLOCK;
+  if (commentUnlock >= comments.length) {
+    commentUnlock = comments.length;
   }
-  commentsLoaderButton.classList.toggle('hidden', dataForModal.commentUnlock >= comments.length);
-  for (let i = 0; i < dataForModal.commentUnlock; i++) {
+  commentsLoaderButton.classList.toggle('hidden', commentUnlock >= comments.length);
+  for (let i = 0; i < commentUnlock; i++) {
     const commentElement = renderComment(comments[i]);
     fragment.append(commentElement);
   }
   socialCommentConteiner.innerHTML = '';
   socialCommentConteiner.append(fragment);
-  socialCommentsCount.innerHTML = `${dataForModal.commentUnlock} из <span class="comments-count">${comments.length}</span> комментариев</div>`;
+  socialCommentsCount.innerHTML = `${commentUnlock} из <span class="comments-count">${comments.length}</span> комментариев</div>`;
 };
 
 const onModalEscKeydown = (evt) => {
@@ -51,14 +52,14 @@ const renderBigPicture = (picture) => {
   modalElement.querySelector('.big-picture__img img').src = picture.url;
   modalElement.querySelector('.social__caption').textContent = picture.description;
   socialLikesCount.textContent = picture.likes;
-  dataForModal.commentsArray = Array.from(picture.comments);
-  dataForModal.commentUnlock = 0;
-  loaderComments(dataForModal.commentsArray);
+  commentsArray = Array.from(picture.comments);
+  commentUnlock = 0;
+  loaderComments(commentsArray);
   document.addEventListener('keydown', onModalEscKeydown);
 };
 
 function onLoadMoreCommentsButtonClick () {
-  loaderComments(dataForModal.commentsArray);
+  loaderComments(commentsArray);
 }
 
 function onCloseModalClick () {

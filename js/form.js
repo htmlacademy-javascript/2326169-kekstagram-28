@@ -1,5 +1,5 @@
 import { isEscapeKey } from './util.js';
-import { dataForForm, SubmitButtonText } from './data.js';
+import { DataForForm, SubmitButtonText } from './data.js';
 import { resetScale } from './scale.js';
 import { resetEffects } from './effects.js';
 
@@ -12,8 +12,8 @@ const overlay = form.querySelector('.img-upload__overlay');
 const submitButton = form.querySelector('.img-upload__submit');
 const imgUploadPreview = form.querySelector('.img-upload__preview img');
 const body = document.querySelector('body');
-
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+let tagsList;
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -21,20 +21,19 @@ const pristine = new Pristine(form, {
   erorTextClass: 'img-upload__field-wrapper__error',
 });
 
-let tagsList;
 function validateHashtag (value) {
   tagsList = value.trim().split(' ').filter((tag) => tag.trim().length);
   return tagsList;
 }
 
-const isValidHashtag = (value) => dataForForm.VALID_SYMBOLS.test(value);
+const isValidHashtag = (value) => DataForForm.VALID_SYMBOLS.test(value);
 
 const isUniqHashtags = (value) => {
   const lowerCaseHashtags = value.map((hashtag) => hashtag.toLowerCase());
   return lowerCaseHashtags.length === new Set(lowerCaseHashtags).size;
 };
 
-const checkingForQuantityHashtags = (value) => value.length <= dataForForm.MAX_HASHTAG_QUANTITY;
+const checkingForQuantityHashtags = (value) => value.length <= DataForForm.MAX_HASHTAG_QUANTITY;
 
 const validateUniqueHashtags = (value) => {
   validateHashtag(value,tagsList);
@@ -54,19 +53,19 @@ const validateValidHashtags = (value) => {
 pristine.addValidator(
   hashtagField,
   validateQuantityHashtags,
-  dataForForm.ERROR_MESSAGE_HASHTAG_QUANTITY,
+  DataForForm.ERROR_MESSAGE_HASHTAG_QUANTITY,
 );
 
 pristine.addValidator(
   hashtagField,
   validateUniqueHashtags,
-  dataForForm.ERROR_MESSAGE_UNIQUE_HASHTAG,
+  DataForForm.ERROR_MESSAGE_UNIQUE_HASHTAG,
 );
 
 pristine.addValidator(
   hashtagField,
   validateValidHashtags,
-  dataForForm.ERROR_MESSAGE_VALID_HASHTAG,
+  DataForForm.ERROR_MESSAGE_VALID_HASHTAG,
 );
 
 
@@ -74,7 +73,7 @@ const isFieldFocus = () =>
   document.activeElement === commentField ||
   document.activeElement === hashtagField;
 
-const overlayClose = () => {
+const closeModal = () => {
   form.reset();
   resetScale();
   resetEffects();
@@ -84,7 +83,7 @@ const overlayClose = () => {
   document.removeEventListener('keydown', onDocumentEscKeydown);
 };
 
-const overlayOpen = () => {
+const openModal = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentEscKeydown);
@@ -100,7 +99,7 @@ const overlayOpen = () => {
 function onDocumentEscKeydown (evt) {
   if(isEscapeKey(evt) && !isFieldFocus()) {
     evt.preventDefault();
-    overlayClose(evt);
+    closeModal(evt);
   }
 }
 
@@ -127,11 +126,11 @@ const submitForm = (cb) => {
 };
 
 const onUploadFileChange = () => {
-  overlayOpen();
+  openModal();
 };
 
 const onCancelButtonClick = () => {
-  overlayClose();
+  closeModal();
 };
 
 
@@ -139,4 +138,4 @@ uploadStart.addEventListener('change', onUploadFileChange);
 uploadCancel.addEventListener('click', onCancelButtonClick);
 
 
-export { submitForm, overlayClose };
+export { submitForm, closeModal };

@@ -1,7 +1,7 @@
 import { getData, sendData } from './api.js';
 import { renderGallery } from './gallery.js';
 import { showAlert, debounce } from './util.js';
-import { submitForm, overlayClose } from './form.js';
+import { submitForm, closeModal } from './form.js';
 import { showSuccessMessage, showErrorMessage } from './messages.js';
 import { sortingImages, getFilteredPictures } from './sorting.js';
 
@@ -9,7 +9,7 @@ import { sortingImages, getFilteredPictures } from './sorting.js';
 submitForm (async (data) => {
   try {
     await sendData(data);
-    overlayClose();
+    closeModal();
     showSuccessMessage();
   } catch {
     showErrorMessage();
