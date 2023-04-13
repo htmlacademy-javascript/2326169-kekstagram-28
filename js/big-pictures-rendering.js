@@ -7,8 +7,9 @@ const closeModalElement = modalElement.querySelector('.big-picture__cancel');
 const socialCommentConteiner = modalElement.querySelector('.social__comments');
 const socialCommentTemplate = modalElement.querySelector('.social__comment');
 const commentsLoaderButton = modalElement.querySelector('.social__comments-loader');
+const commentCount = modalElement.querySelector('.comments-count');
 const body = document.querySelector('body');
-let commentsArray = [];
+let arrayComment = [];
 let commentUnlock = 0;
 const COMMENT_BLOCK = 5;
 
@@ -36,7 +37,10 @@ const loaderComments = (comments) => {
   }
   socialCommentConteiner.innerHTML = '';
   socialCommentConteiner.append(fragment);
-  socialCommentsCount.innerHTML = `${commentUnlock} из <span class="comments-count">${comments.length}</span> комментариев</div>`;
+  const textCountCommentUnlock = `${commentUnlock} из `;
+  commentCount.textContent = `${comments.length}`;
+  const textComment = ' комментариев';
+  socialCommentsCount.textContent = textCountCommentUnlock + commentCount.textContent + textComment;
 };
 
 const onModalEscKeydown = (evt) => {
@@ -52,14 +56,14 @@ const renderBigPicture = (picture) => {
   modalElement.querySelector('.big-picture__img img').src = picture.url;
   modalElement.querySelector('.social__caption').textContent = picture.description;
   socialLikesCount.textContent = picture.likes;
-  commentsArray = Array.from(picture.comments);
+  arrayComment = Array.from(picture.comments);
   commentUnlock = 0;
-  loaderComments(commentsArray);
+  loaderComments(arrayComment);
   document.addEventListener('keydown', onModalEscKeydown);
 };
 
 function onLoadMoreCommentsButtonClick () {
-  loaderComments(commentsArray);
+  loaderComments(arrayComment);
 }
 
 function onCloseModalClick () {

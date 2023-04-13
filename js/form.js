@@ -12,7 +12,7 @@ const overlay = form.querySelector('.img-upload__overlay');
 const submitButton = form.querySelector('.img-upload__submit');
 const imgUploadPreview = form.querySelector('.img-upload__preview img');
 const body = document.querySelector('body');
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const FILE_TYPE = ['jpg', 'jpeg', 'png'];
 const WRONG_FORMAT_MESSAGE = 'Формат изображения должен быть png, jpeg или jpg';
 let tagsList;
 
@@ -90,7 +90,7 @@ const openModal = () => {
   document.addEventListener('keydown', onDocumentEscKeydown);
   const file = uploadStart.files[0];
   const fileName = file.name.toLowerCase();
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  const matches = FILE_TYPE.some((it) => fileName.endsWith(it));
   if (!matches) {
     showAlert(WRONG_FORMAT_MESSAGE);
     closeModal();
