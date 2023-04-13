@@ -42,10 +42,10 @@ const onClickFilter = (cb) => {
   });
 };
 
-const sortingImages = (data, cb) => {
+const sortImages = (data, cb) => {
   imgFiltersFromUsers.classList.remove('img-filters--inactive');
   pictures = [...data];
   onClickFilter(cb);
 };
 
-export { sortingImages, getFilteredPictures };
+export { sortImages, getFilteredPictures };

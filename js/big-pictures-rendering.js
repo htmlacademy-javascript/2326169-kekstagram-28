@@ -24,7 +24,7 @@ const renderComment = (comment) => {
   return commentsListFragment;
 };
 
-const loaderComments = (comments) => {
+const loadingComments = (comments) => {
   const fragment = document.createDocumentFragment();
   commentUnlock += COMMENT_BLOCK;
   if (commentUnlock >= comments.length) {
@@ -58,12 +58,12 @@ const renderBigPicture = (picture) => {
   socialLikesCount.textContent = picture.likes;
   arrayComment = Array.from(picture.comments);
   commentUnlock = 0;
-  loaderComments(arrayComment);
+  loadingComments(arrayComment);
   document.addEventListener('keydown', onModalEscKeydown);
 };
 
 function onLoadMoreCommentsButtonClick () {
-  loaderComments(arrayComment);
+  loadingComments(arrayComment);
 }
 
 function onCloseModalClick () {
