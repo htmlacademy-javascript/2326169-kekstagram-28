@@ -37,10 +37,10 @@ const loaderComments = (comments) => {
   }
   socialCommentConteiner.innerHTML = '';
   socialCommentConteiner.append(fragment);
-  const countCommentUnlockText = `${commentUnlock} из `;
+  const textCountCommentUnlock = `${commentUnlock} из `;
   commentCount.textContent = `${comments.length}`;
   const textComment = ' комментариев';
-  socialCommentsCount.textContent = countCommentUnlockText + commentCount.textContent + textComment;
+  socialCommentsCount.textContent = textCountCommentUnlock + commentCount.textContent + textComment;
 };
 
 const onModalEscKeydown = (evt) => {
